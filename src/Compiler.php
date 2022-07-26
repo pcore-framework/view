@@ -64,7 +64,9 @@ class Compiler
      */
     protected function compileView(string $file): string
     {
-        return $this->readFile($this->getRealPath($file));
+        return preg_replace_callback_array([
+            '/\{\{((--)?)([\s\S]*?)\\1\}\}/' => [$this, 'compileEchos']
+        ], $this->readFile($this->getRealPath($file)));
     }
 
     /**
@@ -91,6 +93,16 @@ class Compiler
             str_replace('.', '/', $template),
             $this->blade->getSuffix()
         );
+    }
+
+    /**
+     * @return string
+     */
+    protected function compileEchos(array $matches)
+    {
+        if ($matches[1] === '') {
+            return sprintf('<?php echo htmlspecialchars((string)%s, ENT_QUOTES); ?>', $matches[3]);
+        }
     }
 
 }
