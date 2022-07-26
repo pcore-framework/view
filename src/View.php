@@ -21,9 +21,25 @@ class View
 
     public function __construct(array $config)
     {
-        $engine = 'PCore\View\/' . $config['engine'];
-        $options = $config['options'];
-        $this->engine = new $engine($options);
+        $this->engine = new $config['engine']($config['options']);
+    }
+
+    /**
+     * @param string $template
+     * @param array $arguments
+     * @return string
+     */
+    public function render(string $template, array $arguments = []): string
+    {
+        return $this->getRenderer()->render($template, $arguments);
+    }
+
+    /**
+     * @return Renderer
+     */
+    public function getRenderer(): Renderer
+    {
+        return new Renderer($this->engine);
     }
 
 }
