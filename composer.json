@@ -25,5 +25,10 @@
         "psr-4": {
             "PCore\\View\\": "src/"
         }
+    },
+    "extra": {
+        "pcore": {
+            "config": "PCore\\View\\ConfigProvider"
+        }
     }
 }
