@@ -45,7 +45,7 @@ class Compiler
     {
         $compileDir = $this->blade->getCompileDir();
         $compiledFile = $compileDir . md5($template) . '.php';
-        if (file_exists($compiledFile) === false) {
+        if ($this->blade->isCache() === false || file_exists($compiledFile) === false) {
             !is_dir($compileDir) && mkdir($compileDir, 0755, true);
             $content = $this->compileView($template);
             while (isset($this->parent)) {

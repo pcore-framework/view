@@ -21,7 +21,7 @@ class View
 
     public function __construct(array $config)
     {
-        $this->engine = new $config['engine']($config['options']);
+        $this->engine = new Blade($config);
     }
 
     /**

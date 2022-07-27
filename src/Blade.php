@@ -20,6 +20,11 @@ class Blade implements ViewEngineInterface
     use AutoFillProperties;
 
     /**
+     * @var bool
+     */
+    protected bool $cache = false;
+
+    /**
      * @var string
      */
     protected string $suffix = '.blade.php';
@@ -53,6 +58,14 @@ class Blade implements ViewEngineInterface
     public function setPath(string $path): void
     {
         $this->path = $path;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCache(): bool
+    {
+        return $this->cache;
     }
 
     /**
