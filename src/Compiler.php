@@ -65,7 +65,8 @@ class Compiler
     protected function compileView(string $file): string
     {
         return preg_replace_callback_array([
-            '/\{\{((--)?)([\s\S]*?)\\1\}\}/' => [$this, 'compileEchos']
+            '/\{\{((--)?)([\s\S]*?)\\1\}\}/' => [$this, 'compileEchos'],
+            '/\{!!([\s\S]*?)!!\}/' => [$this, 'compileRaw']
         ], $this->readFile($this->getRealPath($file)));
     }
 
@@ -96,13 +97,23 @@ class Compiler
     }
 
     /**
+     * @param array $matches
      * @return string
      */
-    protected function compileEchos(array $matches)
+    protected function compileEchos(array $matches): string
     {
         if ($matches[1] === '') {
             return sprintf('<?php echo htmlspecialchars((string)%s, ENT_QUOTES); ?>', $matches[3]);
         }
+    }
+
+    /**
+     * @param array $matches
+     * @return string
+     */
+    protected function compileRaw(array $matches): string
+    {
+        return sprintf('<?php echo %s; ?>', $matches[1]);
     }
 
 }
