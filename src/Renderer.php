@@ -15,9 +15,19 @@ class Renderer
 {
 
     public function __construct(
-        protected ViewEngineInterface $engine
+        protected ViewEngineInterface $engine,
+        protected array               $arguments = []
     )
     {
+    }
+
+    /**
+     * @param string $name
+     * @param mixed $value
+     */
+    public function assign(string $name, mixed $value): void
+    {
+        $this->arguments[$name] = $value;
     }
 
     /**
@@ -28,7 +38,7 @@ class Renderer
     public function render(string $template, array $arguments = []): string
     {
         ob_start();
-        echo (string)$this->engine->render($template, $arguments);
+        echo (string)$this->engine->render($template, array_merge($this->arguments, $arguments));
         return (string)ob_get_clean();
     }
 
