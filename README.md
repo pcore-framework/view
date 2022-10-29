@@ -54,3 +54,92 @@ return new BaseResponse(200,
 // Вывод неэкранированных данных
 {!! $value !!}
 ```
+
+```php
+// Комментарии
+{{--  --}}
+```
+
+```php
+// Расширение макета
+@extends('')
+// 
+@yield('', '')
+```
+
+```php
+// Необработанный PHP
+@php
+    $counter = 1;
+@endphp
+```
+
+```php
+// Подключение дочерних шаблонов
+@include('app.errors')
+```
+
+```php
+// Операторы If
+@if (count($news) === 1)
+   
+@elseif (count($news) > 1)
+   
+@else
+    
+@endif
+```
+
+```php
+@unless (Test::test())
+   
+@endunless
+```
+
+```php
+// Переменная $test считается пустой
+@empty($test)
+
+@endempty
+```
+
+```php
+// Переменная $test определена и не равна null
+@isset($test)
+
+@endisset
+```
+
+```php
+// Циклы
+@for ($i = 0; $i < 10; $i++)
+    {{ $i }}
+@endfor
+
+@foreach ($news as $i)
+    {{ $i->id }}
+@endforeach
+```
+
+```php
+// Операторы Switch
+@switch($i)
+    @case(1)
+        
+        @break
+
+    @case(2)
+  
+        @break
+
+    @default
+
+@endswitch
+```
+
+```php
+// Наследования шаблонов
+@section('sidebar')
+    
+@show
+```
